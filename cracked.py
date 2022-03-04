@@ -42,17 +42,21 @@ def sha256Crack(hash):
 
 def main():
     #python3 cracked.py hashtype hash
-    args = sys.argv[1:]
+    arg = len(sys.argv)
     #1 is hash type, 2 is the hash/password,
-    if len(args) == 3:
-        if args[1] == 'plain':
-            plainCrack(args[2])
-        if args[1] == 'md5':
-            md5Crack(args[2])
-        if args[1] == 'bcrypt':
-            bcryptCrack(args[2])
-        if args[1] == 'sha256':
-            sha256Crack(args[2])
+    if len(arg) == 3:
+        if sys.argv[1] == 'plain':
+            plainCrack(sys.argv[2])
+            sys.exit(0)
+        if sys.argv[1] == 'md5':
+            md5Crack(sys.argv[2])
+            sys.exit(0)
+        if sys.argv[1] == 'bcrypt':
+            bcryptCrack(sys.argv[2])
+            sys.exit(0)
+        if sys.argv[1] == 'sha256':
+            sha256Crack(sys.argv[2])
+            sys.exit(0)
 
     choice = input('what do?\n[1] plainCrack\n[2] md5Crack\n[3] bcryptCrack\n[4] sha256Crack\n')
     if choice == '1':

@@ -42,9 +42,8 @@ def sha256Crack(hash):
 
 def main():
     #python3 cracked.py hashtype hash
-    arg = len(sys.argv)
     #1 is hash type, 2 is the hash/password,
-    if len(arg) == 3:
+    if len(sys.argv) == 3:
         if sys.argv[1] == 'plain':
             plainCrack(sys.argv[2])
             sys.exit(0)

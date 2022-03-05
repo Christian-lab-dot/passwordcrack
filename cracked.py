@@ -1,8 +1,10 @@
 import hashlib
 import bcrypt
 import sys
+import itertools
 
 f = open('passwords.txt', 'r')
+
 
 def plainCrack(password):
     for pw in f:
@@ -40,9 +42,21 @@ def sha256Crack(hash):
             return
     print('password not found')
 
+def brutePlain(password):
+    charList = 'abcdefghijklmnopqrstuvwxyz1234567890'
+    for i in range(51):
+        for guess in itertools.product(charList, repeat=i):
+            print(guess)
+            if ''.join(guess) == password:
+                sol = ''.join(guess)
+                print('password is: ' + sol)
+                return ''.join(guess)
+
+
 def main():
     #python3 cracked.py hashtype hash
-    #1 is hash type, 2 is the hash/password,
+    #1 is hash type, 2 is the hash/password
+    #for bcrypt use the escape character \ for special characters in the hash
     if len(sys.argv) == 3:
         if sys.argv[1] == 'plain':
             plainCrack(sys.argv[2])
@@ -56,8 +70,11 @@ def main():
         if sys.argv[1] == 'sha256':
             sha256Crack(sys.argv[2])
             sys.exit(0)
+        if sys.argv[1] == 'brute':
+            brutePlain(sys.argv[2])
+            sys.exit(0)
 
-    choice = input('what do?\n[1] plainCrack\n[2] md5Crack\n[3] bcryptCrack\n[4] sha256Crack\n')
+    choice = input('what do?\n[1] plainCrack\n[2] md5Crack\n[3] bcryptCrack\n[4] sha256Crack\n[5] brutePlain\n')
     if choice == '1':
         plainCrack(input('Enter password\n'))
     if choice == '2':
@@ -66,6 +83,8 @@ def main():
         bcryptCrack(input('Enter bcrypt hash\n'))
     if choice == '4':
         sha256Crack(input('Enter sha256 hash\n'))
+    if choice == '5':
+        brutePlain(input('Enter password:\n'))
 
 if __name__ == '__main__':
     main()
